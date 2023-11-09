@@ -1,11 +1,9 @@
 import Fastify from 'fastify'
 import { routes } from './routes'
-import postgres from '@fastify/postgres'
-const fastify = Fastify({ logger: true })
 
-fastify.register(postgres, {
-  connectionString: 'postgresql://postgres:postgres@localhost:5434/postgres',
-})
+const options = { logger: true }
+
+const fastify = Fastify(options)
 
 fastify.register(routes)
 
