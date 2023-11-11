@@ -18,3 +18,11 @@ values
 
 -- https://stackoverflow.com/questions/2951875/postgresql-how-do-i-set-the-search-path-at-the-user-level
 ALTER ROLE postgres SET search_path = basse;
+
+-- user table
+create table basse_user (
+id INT GENERATED ALWAYS AS identity,
+login text unique not null,
+password text not null,
+created_at TIMESTAMP NOT null default now()
+)
