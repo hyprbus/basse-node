@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify'
-import { getTasks, getTasksFull } from './queries/tasks'
+import { getTasks, getTasksFull } from './sql/tasks'
 import { tasksSchema, loginJsonSchema } from './schemas'
 import { loginHandler } from './handlers/loginHandler'
 
 export const routes = async (fastify: FastifyInstance) => {
   fastify.get('/', async () => {
-    return { hello: 'world' }
+    return Promise.resolve({ hello: 'will ferrell' })
   })
 
   fastify.post('/login', loginJsonSchema, loginHandler)
@@ -13,6 +13,7 @@ export const routes = async (fastify: FastifyInstance) => {
   fastify.get(
     '/tasks',
     {
+      onRequest: [fastify.authenticate],
       schema: {
         response: {
           200: tasksSchema,

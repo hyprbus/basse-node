@@ -1,15 +1,16 @@
-import { findUserByLogin } from '@/queries/users'
-import { LoginBodyType } from '@/schemas'
-import { verifyPassword } from '@/utils/hashPassword'
+import { findUserByUsername } from '@/sql/users'
+import { UserType } from '@/schemas'
+import { verifyPassword } from '@/utils/password'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { db } from '@/database'
 
 export const loginHandler = async (
-  req: FastifyRequest<{ Body: LoginBodyType }>,
+  req: FastifyRequest<{ Body: UserType }>,
   res: FastifyReply,
 ) => {
-  const { login, password } = req.body
+  const { username, password } = req.body
 
-  const storedUser = await findUserByLogin(login)
+  const storedUser = await findUserByUsername(db)(username)
 
   if (!storedUser) {
     res.status(404).send({ message: 'User not found' })
@@ -23,5 +24,8 @@ export const loginHandler = async (
     return
   }
 
-  res.send({ message: 'Login OK' })
+  // generate token
+  const accessToken = req.server.jwt.sign({ username })
+
+  res.send({ accessToken })
 }

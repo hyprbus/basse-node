@@ -1,9 +1,26 @@
-import Fastify from 'fastify'
+import Fastify, { FastifyReply, FastifyRequest } from 'fastify'
 import { routes } from './routes'
+import config from '@/config'
+import jwt from '@fastify/jwt'
 
 const options = { logger: true }
 
 const fastify = Fastify(options)
+
+fastify.register(jwt, {
+  secret: config.tokenSecret,
+})
+
+fastify.decorate(
+  'authenticate',
+  async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      await request.jwtVerify()
+    } catch (err) {
+      reply.send(err)
+    }
+  },
+)
 
 fastify.register(routes)
 

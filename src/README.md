@@ -7,9 +7,14 @@
   - OK! Login:
     - OK! verify username and hashed password
     - OK! throw error if not OK
-    - generate web token and send it
-  - Authenticate routes with https://www.npmjs.com/package/@fastify/jwt
-  - Test login + getting web token + setting bearer token with Postman
+    - OK! generate web token and send it
+  - OK: Change to use https://www.npmjs.com/package/@fastify/jwt for JWT stuff
+  - OK: DB helper, give either db, task or transaction as argument
+  - OK: Create token with with https://www.npmjs.com/package/@fastify/jwt
+  - OK: Selected route authentication with @fastify/jwt
+  - OK! Extend FastifyInstance type for authentication decorator
+  - Access only user's own stuff in some table (extract username from token)
+  - OK: Test login + getting web token + setting bearer token with Postman
 - Frontend
 
   - Create frontend with vite + ts

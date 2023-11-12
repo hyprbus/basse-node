@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt'
 export const hashPassword = async (password: string): Promise<string> => {
   const saltRounds = 5
   const hash = await bcrypt.hash(password, saltRounds)
-  console.log(password, hash)
   return hash
 }
 

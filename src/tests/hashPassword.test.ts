@@ -1,4 +1,4 @@
-import { hashPassword } from '../utils/hashPassword'
+import { hashPassword } from '../utils/password'
 
 describe('hashPassword', () => {
   it('should return a hashed password', async () => {
