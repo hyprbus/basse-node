@@ -1,16 +1,15 @@
-import { z } from 'zod'
-import { zodToJsonSchema } from 'zod-to-json-schema'
+import { Type, Static } from '@sinclair/typebox'
 
-const loginBodySchema = z.object({
-  username: z.string(),
-  password: z.string(),
+const loginBodySchema = Type.Object({
+  username: Type.String(),
+  password: Type.String(),
 })
 
-export type UserType = z.infer<typeof loginBodySchema>
+export type UserType = Static<typeof loginBodySchema>
 
 export const loginJsonSchema = {
   schema: {
-    body: zodToJsonSchema(loginBodySchema),
+    body: loginBodySchema,
   },
 }
 
