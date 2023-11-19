@@ -1,12 +1,11 @@
 import Fastify, { FastifyReply, FastifyRequest } from 'fastify'
-import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
-import { routesPlugin } from './routes'
+import { routes } from './routes'
 import config from '@/config'
 import jwt from '@fastify/jwt'
 
 const options = { logger: true }
 
-const fastify = Fastify(options).withTypeProvider<TypeBoxTypeProvider>()
+const fastify = Fastify(options)
 
 fastify.register(jwt, {
   secret: config.tokenSecret,
@@ -23,7 +22,7 @@ fastify.decorate(
   },
 )
 
-fastify.register(routesPlugin)
+fastify.register(routes)
 
 fastify.addHook('preHandler', (_, reply, done) => {
   reply.header('Content-Type', 'application/json')

@@ -17,7 +17,7 @@ const TestSchema = {
   },
 }
 
-export const routesPlugin: FastifyPluginAsyncTypebox = async fastify => {
+export const routes: FastifyPluginAsyncTypebox = async fastify => {
   fastify.get('/', async () => {
     return Promise.resolve({ hello: 'will ferrell' })
   })
@@ -36,20 +36,16 @@ export const routesPlugin: FastifyPluginAsyncTypebox = async fastify => {
   )
 
   fastify.get(
-    '/tasks:/id',
+    '/tasks',
     {
       onRequest: [fastify.authenticate],
       schema: {
-        params: Type.Object({
-          id: Type.Number(),
-        }),
         response: {
           200: tasksSchema,
         },
       },
     },
-    async req => {
-      console.log('req.params', req.params)
+    async () => {
       return getTasks()
     },
   )
